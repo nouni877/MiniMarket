@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.minimarket.client.salesReport.SalesReportController">
+
+    <center>
+        <VBox spacing="10" alignment="CENTER">
+            <padding>
+                <Insets top="15" right="15" bottom="15" left="15"/>
+            </padding>
+
+            <Label text="📊 Sales Report" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+
+            <TableView fx:id="tblSales" prefHeight="400" prefWidth="600">
+                <columns>
+                    <TableColumn fx:id="colProduct" text="Product" prefWidth="250"/>
+                    <TableColumn fx:id="colQty" text="Qty" prefWidth="100"/>
+                    <TableColumn fx:id="colSubtotal" text="Subtotal (£)" prefWidth="150"/>
+                </columns>
+            </TableView>
+
+        </VBox>
+    </center>
+</BorderPane>

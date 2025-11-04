@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.minimarket.client.market.MarketController"
+            prefWidth="1200" prefHeight="800"
+            style="-fx-background-color: linear-gradient(to bottom right, #1e1b4b, #2d1b69);">
+
+    <!-- ================== TOP BAR ================== -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="10"
+              style="-fx-background-color: #2a2550; -fx-padding: 10;">
+            <Label text="🛍️  Mini Market Dashboard"
+                   style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label text="💰 Total Sales:" style="-fx-text-fill: #dddddd; -fx-font-size: 14px;"/>
+            <Label fx:id="lblTotalSales" text="£0.00"
+                   style="-fx-text-fill: #00ff88; -fx-font-size: 14px; -fx-font-weight: bold;"/>
+        </HBox>
+    </top>
+
+    <!-- ================== MAIN AREA ================== -->
+    <center>
+        <ScrollPane fitToWidth="true" fitToHeight="true" pannable="true"
+                    vbarPolicy="AS_NEEDED" hbarPolicy="AS_NEEDED"
+                    style="-fx-background: transparent;">
+            <HBox spacing="40" alignment="TOP_CENTER" prefWidth="1000">
+                <padding>
+                    <Insets top="20" right="30" bottom="30" left="30"/>
+                </padding>
+
+                <!-- ===== LEFT PANEL: Product Table & Search ===== -->
+                <VBox spacing="15" alignment="TOP_CENTER" HBox.hgrow="ALWAYS">
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <TextField fx:id="txtSearch" promptText="Search products..." prefWidth="250"/>
+                        <Button text="Search" onAction="#handleSearch"/>
+                        <Button text="Clear" onAction="#handleClearSearch"/>
+                        <CheckBox fx:id="chkLowStock" text="Show Low Stock Only" onAction="#handleLowStockFilter"/>
+                    </HBox>
+
+                    <TableView fx:id="tblProducts" prefHeight="500" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="colName" text="Product" prefWidth="250"/>
+                            <TableColumn fx:id="colPrice" text="Price (£)" prefWidth="150"/>
+                            <TableColumn fx:id="colStock" text="Stock" prefWidth="100"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+
+                <!-- ===== RIGHT PANEL: Controls ===== -->
+                <VBox spacing="20" alignment="TOP_LEFT" prefWidth="320">
+
+                    <!-- ADD PRODUCT -->
+                    <VBox spacing="10" style="-fx-background-color: #3a3370; -fx-padding: 15; -fx-background-radius: 10;">
+                        <Label text="➕ Add Product"
+                               style="-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 15px;"/>
+                        <TextField fx:id="txtAddName" promptText="Name"/>
+                        <TextField fx:id="txtAddPrice" promptText="Price (£)"/>
+                        <TextField fx:id="txtAddQty" promptText="Qty"/>
+                        <Button fx:id="btnAddProduct" text="Add Product" onAction="#handleAddProduct"
+                                style="-fx-background-color: #1e90ff; -fx-text-fill: white;"/>
+                    </VBox>
+
+                    <!-- SHOPPING CART -->
+                    <VBox spacing="10" style="-fx-background-color: #3a3370; -fx-padding: 15; -fx-background-radius: 10;">
+                        <Label text="🛒 Shopping Cart"
+                               style="-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 15px;"/>
+                        <TableView fx:id="tblCart" prefHeight="280">
+                            <columns>
+                                <TableColumn fx:id="cartName" text="Product" prefWidth="140"/>
+                                <TableColumn fx:id="cartQty" text="Qty" prefWidth="70"/>
+                                <TableColumn fx:id="cartSubtotal" text="Subtotal (£)" prefWidth="110"/>
+                            </columns>
+                        </TableView>
+
+                        <TextField fx:id="txtCartName" promptText="Product name"/>
+                        <TextField fx:id="txtCartQty" promptText="Qty"/>
+                        <Button fx:id="btnAddToCart" text="Add to Cart" onAction="#handleAddToCart"
+                                style="-fx-background-color: #27ae60; -fx-text-fill: white;"/>
+                        <Button fx:id="btnRemoveFromCart" text="Remove from Cart" onAction="#handleRemoveFromCart"
+                                style="-fx-background-color: #ff5252; -fx-text-fill: white;"/>
+                        <Button fx:id="btnCheckout" text="Checkout 💵" onAction="#handleCheckout"
+                                style="-fx-background-color: #2ecc71; -fx-text-fill: white;"/>
+                        <Label fx:id="lblCartTotal" text="Cart Total: £0.00"
+                               style="-fx-text-fill: #ddd; -fx-font-weight: bold;"/>
+                    </VBox>
+
+                    <!-- EDIT / RESTOCK PRODUCT -->
+                    <VBox spacing="10" style="-fx-background-color: #3a3370; -fx-padding: 15; -fx-background-radius: 10;">
+                        <Label text="✏️ Edit / Restock Product"
+                               style="-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 15px;"/>
+                        <TextField fx:id="txtEditName" promptText="Product name"/>
+                        <TextField fx:id="txtEditPrice" promptText="New price (£)"/>
+                        <TextField fx:id="txtEditQty" promptText="New quantity"/>
+                        <Button fx:id="btnEditProduct" text="Save Changes" onAction="#handleEditProduct"
+                                style="-fx-background-color: #3498db; -fx-text-fill: white;"/>
+                    </VBox>
+
+                    <!-- REMOVE PRODUCT -->
+                    <VBox spacing="10" style="-fx-background-color: #3a3370; -fx-padding: 15; -fx-background-radius: 10;">
+                        <Label text="❌ Remove Product"
+                               style="-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 15px;"/>
+                        <TextField fx:id="txtRemoveName" promptText="Name to remove"/>
+                        <Button fx:id="btnRemoveProduct" text="Remove" onAction="#handleRemoveProduct"
+                                style="-fx-background-color: #e74c3c; -fx-text-fill: white;"/>
+                    </VBox>
+
+                    <!-- CLEAR INVENTORY -->
+                    <VBox spacing="10" style="-fx-background-color: #3a3370; -fx-padding: 15; -fx-background-radius: 10;">
+                        <Label text="🧹 Clear Inventory"
+                               style="-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 15px;"/>
+                        <Button fx:id="btnClearInventory" text="Clear All" onAction="#handleClearInventory"
+                                style="-fx-background-color: #9b59b6; -fx-text-fill: white;"/>
+                    </VBox>
+
+                    <!-- SALES REPORT -->
+                    <VBox spacing="10" style="-fx-background-color: #3a3370; -fx-padding: 15; -fx-background-radius: 10;">
+                        <Label text="📊 Sales Report"
+                               style="-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 15px;"/>
+                        <Button fx:id="btnSalesReport" text="View Sales Report" onAction="#handleViewReport"
+                                style="-fx-background-color: #1e90ff; -fx-text-fill: white;"/>
+                    </VBox>
+                </VBox>
+            </HBox>
+        </ScrollPane>
+    </center>
+</BorderPane>
+
