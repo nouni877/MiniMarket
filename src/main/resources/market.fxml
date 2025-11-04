@@ -22,7 +22,7 @@
                    style="-fx-text-fill: #00ff88; -fx-font-size: 14px; -fx-font-weight: bold;"/>
         </HBox>
     </top>
-        / / main area
+    <!-- main area -->
     <center>
         <ScrollPane fitToWidth="true" fitToHeight="true" pannable="true"
                     vbarPolicy="AS_NEEDED" hbarPolicy="AS_NEEDED"
@@ -32,7 +32,7 @@
                     <Insets top="20" right="30" bottom="30" left="30"/>
                 </padding>
 
-                // left panel controls
+                <!-- left panel  -->
                 <VBox spacing="15" alignment="TOP_CENTER" HBox.hgrow="ALWAYS">
                     <HBox spacing="10" alignment="CENTER_LEFT">
                         <TextField fx:id="txtSearch" promptText="Search products..." prefWidth="250"/>
@@ -51,10 +51,10 @@
                 </VBox>
 
 
-                // right panel controls
+                <!-- right panel -->
                 <VBox spacing="20" alignment="TOP_LEFT" prefWidth="320">
+                    <!-- add products -->
 
-                    // add products
                     <VBox spacing="10" style="-fx-background-color: #3a3370; -fx-padding: 15; -fx-background-radius: 10;">
                         <Label text="➕ Add Product"
                                style="-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 15px;"/>
@@ -66,7 +66,7 @@
                     </VBox>
 
 
-                    // shopping cart
+                    <!-- shopping cart  -->
                     <VBox spacing="10" style="-fx-background-color: #3a3370; -fx-padding: 15; -fx-background-radius: 10;">
                         <Label text="🛒 Shopping Cart"
                                style="-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 15px;"/>
@@ -91,7 +91,7 @@
                     </VBox>
 
 
-/                   / edit / restock product
+                    <!-- edit and restock -->
                     <VBox spacing="10" style="-fx-background-color: #3a3370; -fx-padding: 15; -fx-background-radius: 10;">
                         <Label text="✏️ Edit / Restock Product"
                                style="-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 15px;"/>
@@ -103,7 +103,7 @@
                     </VBox>
 
 
-                    // remove product
+                    <!-- remove product -->
                     <VBox spacing="10" style="-fx-background-color: #3a3370; -fx-padding: 15; -fx-background-radius: 10;">
                         <Label text="❌ Remove Product"
                                style="-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 15px;"/>
@@ -113,7 +113,7 @@
                     </VBox>
 
 
-                    // clear
+                    <!-- clear-->
                     <VBox spacing="10" style="-fx-background-color: #3a3370; -fx-padding: 15; -fx-background-radius: 10;">
                         <Label text="🧹 Clear Inventory"
                                style="-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 15px;"/>
@@ -121,7 +121,7 @@
                                 style="-fx-background-color: #9b59b6; -fx-text-fill: white;"/>
                     </VBox>
 
-                    // sales report
+                    <!-- sales report-->
                     <VBox spacing="10" style="-fx-background-color: #3a3370; -fx-padding: 15; -fx-background-radius: 10;">
                         <Label text="📊 Sales Report"
                                style="-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 15px;"/>

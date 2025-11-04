@@ -16,7 +16,7 @@
           AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
           AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
 
-            // title
+
         <VBox alignment="CENTER" spacing="60">
             <Label text="🛍️  Welcome to Mini Market"
                    style="-fx-text-fill: white; -fx-font-size: 48px; -fx-font-weight: bold;"/>
@@ -36,7 +36,7 @@
                            -fx-padding: 10 40; -fx-background-radius: 10;"/>
         </HBox>
 
-       // workers login
+        <!-- workers login -->
         <VBox fx:id="workerLoginBox" visible="false" spacing="15"
               alignment="CENTER" style="-fx-background-color: rgba(255,255,255,0.1);
               -fx-background-radius: 15; -fx-padding: 30; -fx-max-width: 400;">
@@ -55,7 +55,7 @@
             <Label fx:id="lblPinMessage" text="" style="-fx-text-fill: #ff7675; -fx-font-size: 14px;"/>
         </VBox>
 
-        // footer
+        <!-- footer -->
         <Label text="© 2025 Mini Market System"
                style="-fx-text-fill: #aaaaaa; -fx-font-size: 14px;"/>
     </VBox>
