@@ -17,7 +17,7 @@ import java.util.Optional;
 
 public class MarketController {
 
-    // ======== FXML ELEMENTS ========
+    // fxml elements
     @FXML private TableView<Product> tblProducts;
     @FXML private TableColumn<Product, String> colName;
     @FXML private TableColumn<Product, Double> colPrice;
@@ -40,7 +40,6 @@ public class MarketController {
     // Role-based access buttons
     @FXML private Button btnAddProduct, btnEditProduct, btnRemoveProduct, btnClearInventory;
 
-    // ======== DATA ========
     private ObservableList<Product> products;
     private ObservableList<CartItem> cartItems;
 
@@ -51,7 +50,6 @@ public class MarketController {
     private double totalSales = 0.0;
     private String userRole = "buyer"; // default
 
-    // ======== INITIALIZE ========
     @FXML
     public void initialize() {
         // Setup product table
@@ -75,7 +73,6 @@ public class MarketController {
         lblCartTotal.setText("Cart Total: £0.00");
     }
 
-    // ======== ROLE HANDLING ========
     public void setUserRole(String role) {
         this.userRole = role;
 
@@ -108,7 +105,6 @@ public class MarketController {
         btnClearInventory.setDisable(false);
     }
 
-    // ======== SEARCH PRODUCTS ========
     @FXML
     private void handleSearch(ActionEvent e) {
         String keyword = txtSearch.getText().trim().toLowerCase();
@@ -140,7 +136,6 @@ public class MarketController {
         }
     }
 
-    // ======== ADD PRODUCT ========
     @FXML
     private void handleAddProduct(ActionEvent e) {
         if (!isWorker()) {
@@ -180,7 +175,6 @@ public class MarketController {
         txtAddQty.clear();
     }
 
-    // ======== CART OPERATIONS ========
     @FXML
     private void handleAddToCart(ActionEvent e) {
         String name = txtCartName.getText().trim();
@@ -246,7 +240,6 @@ public class MarketController {
         return null;
     }
 
-    // ======== EDIT / RESTOCK PRODUCT ========
     @FXML
     private void handleEditProduct(ActionEvent e) {
         if (!isWorker()) {
@@ -282,7 +275,6 @@ public class MarketController {
         }
     }
 
-    // ======== REMOVE PRODUCT ========
     @FXML
     private void handleRemoveProduct(ActionEvent e) {
         if (!isWorker()) {
@@ -311,7 +303,6 @@ public class MarketController {
         }
     }
 
-    // ======== CLEAR INVENTORY ========
     @FXML
     private void handleClearInventory(ActionEvent e) {
         if (!isWorker()) {
@@ -330,7 +321,6 @@ public class MarketController {
         }
     }
 
-    // ======== SALES REPORT ========
     @FXML
     private void handleViewReport(ActionEvent e) {
         try {
@@ -342,7 +332,6 @@ public class MarketController {
         }
     }
 
-    // ======== UTIL ========
     private void showAlert(String title, String msg) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);

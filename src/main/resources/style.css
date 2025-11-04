@@ -4,7 +4,6 @@
     -fx-background-color: linear-gradient(to bottom right, #1a142a, #2a2347);
 }
 
-/* Scroll containers must be transparent so the gradient shows */
 .scroll-pane {
     -fx-background: transparent;
     -fx-background-color: transparent;
@@ -13,12 +12,10 @@
     -fx-background-color: transparent;
 }
 
-/* Any generic layouts default to transparent unless they are "cards" */
 .hbox, .vbox {
     -fx-background-color: transparent;
 }
 
-/* ====== TOP BAR ====== */
 .top-bar {
     -fx-background-color: #241b3a;
     -fx-border-width: 0 0 1 0;
@@ -33,7 +30,6 @@
     -fx-text-fill: #e0dfff;
 }
 
-/* ====== INFO LABELS ====== */
 .label {
     -fx-text-fill: #e0dfff;
 }
@@ -47,14 +43,12 @@
     -fx-text-fill: #a2b6ff;
 }
 
-/* ====== SECTION HEADERS ====== */
 .section-header {
     -fx-text-fill: #dcd9ff;
     -fx-font-weight: bold;
     -fx-opacity: 0.95;
 }
 
-/* ====== CARD PANELS (right side + left group) ====== */
 .card {
     -fx-background-color: rgba(50, 42, 84, 0.72);
     -fx-background-radius: 14;
@@ -62,7 +56,6 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 12, 0, 0, 4);
 }
 
-/* ====== TABLE VIEW ====== */
 .table-view {
     -fx-background-color: #2c2445;
     -fx-border-color: #3a2f68;
@@ -89,7 +82,6 @@
     -fx-background-color: #6c5ce7;
 }
 
-/* ====== TEXT FIELDS ====== */
 .text-field {
     -fx-background-color: #191530;
     -fx-text-fill: #ffffff;
@@ -105,7 +97,6 @@
     -fx-effect: dropshadow(gaussian, rgba(108,92,231,0.6), 8, 0, 0, 2);
 }
 
-/* ====== BUTTONS (base) ====== */
 .button {
     -fx-background-radius: 10;
     -fx-font-weight: bold;
@@ -120,7 +111,6 @@
     -fx-background-color: #4c43a4;
 }
 
-/* ====== ACTION BUTTON COLORS BY ID ====== */
 #btnAddProduct {           -fx-background-color: #3b82f6; }
 #btnAddProduct:hover {     -fx-background-color: #5aa0ff; }
 
@@ -145,7 +135,6 @@
 #btnSalesReport {          -fx-background-color: #3b82f6; }
 #btnSalesReport:hover {    -fx-background-color: #5aa0ff; }
 
-/* ====== SEPARATORS / CHECKBOX ====== */
 .separator {
     -fx-background-color: #403a70;
 }
@@ -153,7 +142,6 @@
     -fx-text-fill: #d6d6f7;
 }
 
-/* ====== FOCUS GLOW (subtle) ====== */
 :focused {
     -fx-effect: dropshadow(gaussian, rgba(120, 100, 255, 0.35), 8, 0, 0, 2);
 }

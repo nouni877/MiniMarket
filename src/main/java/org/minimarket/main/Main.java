@@ -10,7 +10,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/role_selection.fxml"));
-        Scene scene = new Scene(loader.load(), 1200, 800); // 👈 set exact same size as dashboard
+        Scene scene = new Scene(loader.load(), 1200, 800);
         stage.setTitle("Mini Market - Role Selection");
         stage.setScene(scene);
         stage.centerOnScreen();

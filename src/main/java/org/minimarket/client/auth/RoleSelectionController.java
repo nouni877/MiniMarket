@@ -52,7 +52,7 @@ public class RoleSelectionController {
                 e.printStackTrace();
             }
         } else {
-            lblPinMessage.setText("❌ Incorrect PIN. Please try again.");
+            lblPinMessage.setText(" Incorrect PIN. Please try again.");
         }
     }
 }

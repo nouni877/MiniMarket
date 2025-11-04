@@ -12,7 +12,6 @@ public class RoleSelectionApp extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/role_selection.fxml"));
         Scene scene = new Scene(loader.load(), 1200, 800);
 
-        // Optional: load the same style.css if you want global styling
         scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
 
         primaryStage.setTitle("Mini Market - Role Selection");

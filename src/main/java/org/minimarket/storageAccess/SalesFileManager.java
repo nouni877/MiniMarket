@@ -10,7 +10,7 @@ public class SalesFileManager {
     private static final String SALES_LOG_FILE = "src/main/resources/data/sales_log.csv";
     private static final String TOTAL_SALES_FILE = "src/main/resources/data/sales.csv";
 
-    // ============ LOAD TOTAL SALES ============
+    // load sales
     public double loadTotalSales() {
         File file = new File(TOTAL_SALES_FILE);
         if (!file.exists()) return 0.0;
@@ -26,7 +26,7 @@ public class SalesFileManager {
         return 0.0;
     }
 
-    // ============ SAVE TOTAL SALES ============
+    // save total sales
     public void saveTotalSales(double totalSales) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(TOTAL_SALES_FILE, StandardCharsets.UTF_8))) {
             writer.write(String.valueOf(totalSales));
@@ -35,7 +35,7 @@ public class SalesFileManager {
         }
     }
 
-    // ============ ADD SALE RECORD ============
+    // add record
     public void logSale(String productName, int quantity, double subtotal) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(SALES_LOG_FILE, true))) {
             writer.write(productName + "," + quantity + "," + subtotal);
@@ -45,7 +45,7 @@ public class SalesFileManager {
         }
     }
 
-    // ============ READ ALL SALE RECORDS ============
+    // read all sale records
     public List<String[]> loadSalesLog() {
         List<String[]> records = new ArrayList<>();
         File file = new File(SALES_LOG_FILE);

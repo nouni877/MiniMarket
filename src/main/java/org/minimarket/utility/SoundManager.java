@@ -21,11 +21,11 @@ public class SoundManager {
             if (resource != null) {
                 return new AudioClip(resource.toExternalForm());
             } else {
-                System.err.println("⚠️ Missing sound file: " + path);
+                System.err.println("Missing sound file: " + path);
                 return null;
             }
         } catch (Exception e) {
-            System.err.println("⚠️ Error loading sound: " + path);
+            System.err.println("Error loading sound: " + path);
             return null;
         }
     }

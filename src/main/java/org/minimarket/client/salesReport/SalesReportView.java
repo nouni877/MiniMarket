@@ -17,11 +17,10 @@ public class SalesReportView extends Application {
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
-            System.err.println("⚠️ Failed to load Sales Report window.");
+            System.err.println("⚠ Failed to load Sales Report window.");
         }
     }
 
-    // Helper method so MarketController can launch it
     public void open(Stage stage) {
         start(stage);
     }
