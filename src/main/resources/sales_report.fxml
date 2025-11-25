@@ -1,29 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <BorderPane xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.minimarket.client.salesReport.SalesReportController">
+            fx:controller="org.minimarket.client.salesReport.SalesReportController"
+            prefWidth="720" prefHeight="420">
+
+    <top>
+        <HBox spacing="10" style="-fx-background-color: #2a2550; -fx-padding: 10;">
+            <Label text="📊 Sales Report" style="-fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold;"/>
+            <Pane HBox.hgrow="ALWAYS"/>
+            <Label text="Total:" style="-fx-text-fill: #cccccc;"/>
+            <Label fx:id="lblTotal" text="£0.00" style="-fx-text-fill: #2ecc71; -fx-font-weight: bold;"/>
+        </HBox>
+    </top>
 
     <center>
-        <VBox spacing="10" alignment="CENTER">
-            <padding>
-                <Insets top="15" right="15" bottom="15" left="15"/>
-            </padding>
-
-            <Label text="📊 Sales Report" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: white;"/>
-
-            <TableView fx:id="tblSales" prefHeight="400" prefWidth="600">
-                <columns>
-                    <TableColumn fx:id="colProduct" text="Product" prefWidth="250"/>
-                    <TableColumn fx:id="colQty" text="Qty" prefWidth="100"/>
-                    <TableColumn fx:id="colSubtotal" text="Subtotal (£)" prefWidth="150"/>
-                </columns>
-            </TableView>
-
-        </VBox>
+        <TableView fx:id="salesTable" BorderPane.alignment="CENTER">
+            <columns>
+                <TableColumn fx:id="colProduct" text="Product" prefWidth="300"/>
+                <TableColumn fx:id="colQty" text="Qty" prefWidth="100"/>
+                <TableColumn fx:id="colSubtotal" text="Subtotal (£)" prefWidth="200"/>
+            </columns>
+            <placeholder>
+                <Label text="No content in table"/>
+            </placeholder>
+        </TableView>
     </center>
+
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
 </BorderPane>
+

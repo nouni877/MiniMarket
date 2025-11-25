@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.minimarket.client.market.BuyerController"
+            prefWidth="1200" prefHeight="800"
+            style="-fx-background-color: linear-gradient(to bottom right, #1e1b4b, #2d1b69);">
+
+    <!-- Top bar (unchanged) -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="10"
+              style="-fx-background-color: #2a2550; -fx-padding: 10;">
+            <Label text="🛍️  Mini Market Buyer View"
+                   style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label text="💰 Cart Total:" style="-fx-text-fill: #dddddd; -fx-font-size: 14px;"/>
+            <Label fx:id="cartTotalLabel" text="£0.00"
+                   style="-fx-text-fill: #00ff88; -fx-font-size: 14px; -fx-font-weight: bold;"/>
+        </HBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" fitToHeight="true" pannable="true"
+                    vbarPolicy="AS_NEEDED" hbarPolicy="AS_NEEDED"
+                    style="-fx-background: transparent; -fx-background-color: transparent;">
+            <HBox spacing="40" alignment="TOP_CENTER" prefWidth="1000">
+                <padding>
+                    <Insets top="20" right="30" bottom="30" left="30"/>
+                </padding>
+
+                <!-- LEFT PANEL (same layout as worker) -->
+                <VBox spacing="15" alignment="TOP_CENTER" HBox.hgrow="ALWAYS">
+                    <!-- search row (same) -->
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <TextField fx:id="txtSearch" promptText="Search products..." prefWidth="250"/>
+                        <Button fx:id="btnSearch" text="Search"/>
+                        <Button fx:id="btnClear" text="Clear"/>
+                    </HBox>
+
+                    <!-- dark card like the worker table card -->
+                    <VBox spacing="0" VBox.vgrow="ALWAYS"
+                          style="-fx-background-color: #2a2550; -fx-background-radius: 12; -fx-padding: 12;">
+                        <!-- the ScrollPane’s viewport is transparent so this card color shows -->
+                        <ScrollPane fitToWidth="true" fitToHeight="true"
+                                    style="-fx-background: transparent; -fx-background-color: transparent;"
+                                    VBox.vgrow="ALWAYS">
+                            <!-- product grid replaces the table -->
+                            <FlowPane fx:id="productContainer"
+                                      hgap="25" vgap="25" alignment="TOP_LEFT"
+                                      style="-fx-padding: 16;">
+                                <!-- cards added dynamically by BuyerController -->
+                            </FlowPane>
+                        </ScrollPane>
+                    </VBox>
+                </VBox>
+
+                <!-- RIGHT SIDEBAR (identical style to worker) -->
+                <VBox spacing="20" alignment="TOP_LEFT" prefWidth="320">
+
+                    <!-- Shopping Cart box -->
+                    <VBox spacing="10"
+                          style="-fx-background-color: #3a3370; -fx-padding: 15; -fx-background-radius: 10;">
+                        <Label text="🛒 Shopping Cart"
+                               style="-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 15px;"/>
+
+                        <ListView fx:id="cartList" prefHeight="300"
+                                  style="-fx-background-color: #2a2550; -fx-text-fill: white; -fx-background-radius: 8;"/>
+
+                        <Button fx:id="btnRemoveFromCart" text="Remove Selected"
+                                style="-fx-background-color: #ff5252; -fx-text-fill: white;"/>
+                        <Button text="Checkout" onAction="#handleCheckout"
+                                style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 20;"/>
+
+                    </VBox>
+
+                    <!-- Return box (same card style) -->
+                    <VBox spacing="10"
+                          style="-fx-background-color: #3a3370; -fx-padding: 15; -fx-background-radius: 10;">
+                        <Label text="↩️ Return"
+                               style="-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 15px;"/>
+                        <Button fx:id="btnBack" text="Back to Role Selection"
+                                style="-fx-background-color: #9b59b6; -fx-text-fill: white;"/>
+                    </VBox>
+                </VBox>
+            </HBox>
+        </ScrollPane>
+    </center>
+</BorderPane>
+
+

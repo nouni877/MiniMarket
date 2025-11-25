@@ -6,22 +6,12 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class SalesReportView extends Application {
-
     @Override
-    public void start(Stage stage) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/sales_report.fxml"));
-            Scene scene = new Scene(loader.load());
-            stage.setTitle("Sales Report");
-            stage.setScene(scene);
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.err.println("⚠ Failed to load Sales Report window.");
-        }
-    }
-
-    public void open(Stage stage) {
-        start(stage);
+    public void start(Stage stage) throws Exception {
+        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/sales_report.fxml")));
+        stage.setTitle("Sales Report");
+        stage.setScene(scene);
+        stage.centerOnScreen();
+        stage.show();
     }
 }

@@ -1,65 +1,82 @@
 package org.minimarket.storageAccess;
 
+import org.minimarket.catalogue.SaleRecord;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Manages saving and loading of sales records and total sales.
+ */
 public class SalesFileManager {
 
+    private static final String SALES_FILE = "src/main/resources/data/total_sales.txt";
     private static final String SALES_LOG_FILE = "src/main/resources/data/sales_log.csv";
-    private static final String TOTAL_SALES_FILE = "src/main/resources/data/sales.csv";
 
-    // load sales
+    /**
+     * Loads total sales from text file.
+     */
     public double loadTotalSales() {
-        File file = new File(TOTAL_SALES_FILE);
-        if (!file.exists()) return 0.0;
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(file, StandardCharsets.UTF_8))) {
-            String line = reader.readLine();
-            if (line != null && !line.isEmpty()) {
-                return Double.parseDouble(line.trim());
-            }
-        } catch (IOException | NumberFormatException e) {
-            e.printStackTrace();
+        double total = 0;
+        try (BufferedReader br = new BufferedReader(new FileReader(SALES_FILE))) {
+            String line = br.readLine();
+            if (line != null) total = Double.parseDouble(line);
+        } catch (IOException e) {
+            System.err.println("Error reading sales file: " + e.getMessage());
         }
-        return 0.0;
+        return total;
     }
 
-    // save total sales
+    /**
+     * Saves total sales to text file.
+     */
     public void saveTotalSales(double totalSales) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(TOTAL_SALES_FILE, StandardCharsets.UTF_8))) {
-            writer.write(String.valueOf(totalSales));
+        try (PrintWriter pw = new PrintWriter(new FileWriter(SALES_FILE))) {
+            pw.println(totalSales);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error saving total sales: " + e.getMessage());
         }
     }
 
-    // add record
-    public void logSale(String productName, int quantity, double subtotal) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(SALES_LOG_FILE, true))) {
-            writer.write(productName + "," + quantity + "," + subtotal);
-            writer.newLine();
+    /**
+     * Appends a list of sold products to the sales log.
+     */
+    public void saveSaleRecords(List<SaleRecord> records) {
+        try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream(SALES_LOG_FILE, true), StandardCharsets.UTF_8))) {
+
+            for (SaleRecord record : records) {
+                bw.write(record.getProductName() + "," + record.getQuantity() + "," + record.getSubtotal());
+                bw.newLine();
+            }
+
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error writing sales log: " + e.getMessage());
         }
     }
 
-    // read all sale records
-    public List<String[]> loadSalesLog() {
-        List<String[]> records = new ArrayList<>();
-        File file = new File(SALES_LOG_FILE);
-        if (!file.exists()) return records;
+    /**
+     * Loads all sale records from CSV.
+     */
+    public List<SaleRecord> loadSaleRecords() {
+        List<SaleRecord> sales = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(
+                new FileInputStream(SALES_LOG_FILE), StandardCharsets.UTF_8))) {
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
-            while ((line = reader.readLine()) != null) {
+            while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length == 3) records.add(parts);
+                if (parts.length == 3) {
+                    sales.add(new SaleRecord(parts[0],
+                            Integer.parseInt(parts[1]),
+                            Double.parseDouble(parts[2])));
+                }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error loading sales log: " + e.getMessage());
         }
-        return records;
+        return sales;
     }
 }
+

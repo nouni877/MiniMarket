@@ -11,6 +11,7 @@
             prefWidth="1200" prefHeight="800"
             style="-fx-background-color: linear-gradient(to bottom right, #1e1b4b, #2d1b69);">
 
+    <!-- HEADER BAR -->
     <top>
         <HBox alignment="CENTER_LEFT" spacing="10"
               style="-fx-background-color: #2a2550; -fx-padding: 10;">
@@ -22,26 +23,37 @@
                    style="-fx-text-fill: #00ff88; -fx-font-size: 14px; -fx-font-weight: bold;"/>
         </HBox>
     </top>
-    <!-- main area -->
+
+    <!-- MAIN CONTENT -->
     <center>
         <ScrollPane fitToWidth="true" fitToHeight="true" pannable="true"
                     vbarPolicy="AS_NEEDED" hbarPolicy="AS_NEEDED"
-                    style="-fx-background: transparent;">
+                    style="-fx-background: transparent; -fx-background-color: transparent;">
             <HBox spacing="40" alignment="TOP_CENTER" prefWidth="1000">
                 <padding>
                     <Insets top="20" right="30" bottom="30" left="30"/>
                 </padding>
 
-                <!-- left panel  -->
+                <!-- LEFT SIDE -->
                 <VBox spacing="15" alignment="TOP_CENTER" HBox.hgrow="ALWAYS">
+                    <!-- Search Row -->
                     <HBox spacing="10" alignment="CENTER_LEFT">
-                        <TextField fx:id="txtSearch" promptText="Search products..." prefWidth="250"/>
-                        <Button text="Search" onAction="#handleSearch"/>
-                        <Button text="Clear" onAction="#handleClearSearch"/>
-                        <CheckBox fx:id="chkLowStock" text="Show Low Stock Only" onAction="#handleLowStockFilter"/>
+                        <TextField fx:id="txtSearch" promptText="Search products..." prefWidth="250"
+                                   style="-fx-background-color: #3a3370; -fx-text-fill: white; -fx-prompt-text-fill: #aaa;"/>
+                        <Button text="Search" onAction="#handleSearch"
+                                style="-fx-background-color: #1e90ff; -fx-text-fill: white;"/>
+                        <Button text="Clear" onAction="#handleClearSearch"
+                                style="-fx-background-color: #9b59b6; -fx-text-fill: white;"/>
+                        <CheckBox fx:id="chkLowStock" text="Show Low Stock Only" onAction="#handleLowStockFilter"
+                                  style="-fx-text-fill: white;"/>
                     </HBox>
 
-                    <TableView fx:id="tblProducts" prefHeight="500" VBox.vgrow="ALWAYS">
+                    <!-- Product Table (restyled) -->
+                    <TableView fx:id="tblProducts" prefHeight="500" VBox.vgrow="ALWAYS"
+                               style="-fx-background-color: #2a2550; -fx-control-inner-background: #2a2550;
+                                      -fx-table-cell-border-color: transparent;
+                                      -fx-table-header-border-color: #3a3370;
+                                      -fx-text-fill: white;">
                         <columns>
                             <TableColumn fx:id="colName" text="Product" prefWidth="250"/>
                             <TableColumn fx:id="colPrice" text="Price (£)" prefWidth="150"/>
@@ -50,27 +62,29 @@
                     </TableView>
                 </VBox>
 
-
-                <!-- right panel -->
+                <!-- RIGHT SIDE -->
                 <VBox spacing="20" alignment="TOP_LEFT" prefWidth="320">
-                    <!-- add products -->
 
+                    <!-- ADD PRODUCT -->
                     <VBox spacing="10" style="-fx-background-color: #3a3370; -fx-padding: 15; -fx-background-radius: 10;">
                         <Label text="➕ Add Product"
                                style="-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 15px;"/>
-                        <TextField fx:id="txtAddName" promptText="Name"/>
-                        <TextField fx:id="txtAddPrice" promptText="Price (£)"/>
-                        <TextField fx:id="txtAddQty" promptText="Qty"/>
+                        <TextField fx:id="txtAddName" promptText="Name"
+                                   style="-fx-background-color: #2a2550; -fx-text-fill: white;"/>
+                        <TextField fx:id="txtAddPrice" promptText="Price (£)"
+                                   style="-fx-background-color: #2a2550; -fx-text-fill: white;"/>
+                        <TextField fx:id="txtAddQty" promptText="Qty"
+                                   style="-fx-background-color: #2a2550; -fx-text-fill: white;"/>
                         <Button fx:id="btnAddProduct" text="Add Product" onAction="#handleAddProduct"
                                 style="-fx-background-color: #1e90ff; -fx-text-fill: white;"/>
                     </VBox>
 
-
-                    <!-- shopping cart  -->
+                    <!-- SHOPPING CART -->
                     <VBox spacing="10" style="-fx-background-color: #3a3370; -fx-padding: 15; -fx-background-radius: 10;">
                         <Label text="🛒 Shopping Cart"
                                style="-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 15px;"/>
-                        <TableView fx:id="tblCart" prefHeight="280">
+                        <TableView fx:id="tblCart" prefHeight="280"
+                                   style="-fx-background-color: #2a2550; -fx-control-inner-background: #2a2550; -fx-text-fill: white;">
                             <columns>
                                 <TableColumn fx:id="cartName" text="Product" prefWidth="140"/>
                                 <TableColumn fx:id="cartQty" text="Qty" prefWidth="70"/>
@@ -78,8 +92,11 @@
                             </columns>
                         </TableView>
 
-                        <TextField fx:id="txtCartName" promptText="Product name"/>
-                        <TextField fx:id="txtCartQty" promptText="Qty"/>
+                        <TextField fx:id="txtCartName" promptText="Product name"
+                                   style="-fx-background-color: #2a2550; -fx-text-fill: white;"/>
+                        <TextField fx:id="txtCartQty" promptText="Qty"
+                                   style="-fx-background-color: #2a2550; -fx-text-fill: white;"/>
+
                         <Button fx:id="btnAddToCart" text="Add to Cart" onAction="#handleAddToCart"
                                 style="-fx-background-color: #27ae60; -fx-text-fill: white;"/>
                         <Button fx:id="btnRemoveFromCart" text="Remove from Cart" onAction="#handleRemoveFromCart"
@@ -90,30 +107,29 @@
                                style="-fx-text-fill: #ddd; -fx-font-weight: bold;"/>
                     </VBox>
 
-
-                    <!-- edit and restock -->
+                    <!-- OTHER SECTIONS -->
                     <VBox spacing="10" style="-fx-background-color: #3a3370; -fx-padding: 15; -fx-background-radius: 10;">
                         <Label text="✏️ Edit / Restock Product"
                                style="-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 15px;"/>
-                        <TextField fx:id="txtEditName" promptText="Product name"/>
-                        <TextField fx:id="txtEditPrice" promptText="New price (£)"/>
-                        <TextField fx:id="txtEditQty" promptText="New quantity"/>
+                        <TextField fx:id="txtEditName" promptText="Product name"
+                                   style="-fx-background-color: #2a2550; -fx-text-fill: white;"/>
+                        <TextField fx:id="txtEditPrice" promptText="New price (£)"
+                                   style="-fx-background-color: #2a2550; -fx-text-fill: white;"/>
+                        <TextField fx:id="txtEditQty" promptText="New quantity"
+                                   style="-fx-background-color: #2a2550; -fx-text-fill: white;"/>
                         <Button fx:id="btnEditProduct" text="Save Changes" onAction="#handleEditProduct"
                                 style="-fx-background-color: #3498db; -fx-text-fill: white;"/>
                     </VBox>
 
-
-                    <!-- remove product -->
                     <VBox spacing="10" style="-fx-background-color: #3a3370; -fx-padding: 15; -fx-background-radius: 10;">
                         <Label text="❌ Remove Product"
                                style="-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 15px;"/>
-                        <TextField fx:id="txtRemoveName" promptText="Name to remove"/>
+                        <TextField fx:id="txtRemoveName" promptText="Name to remove"
+                                   style="-fx-background-color: #2a2550; -fx-text-fill: white;"/>
                         <Button fx:id="btnRemoveProduct" text="Remove" onAction="#handleRemoveProduct"
                                 style="-fx-background-color: #e74c3c; -fx-text-fill: white;"/>
                     </VBox>
 
-
-                    <!-- clear-->
                     <VBox spacing="10" style="-fx-background-color: #3a3370; -fx-padding: 15; -fx-background-radius: 10;">
                         <Label text="🧹 Clear Inventory"
                                style="-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 15px;"/>
@@ -121,16 +137,20 @@
                                 style="-fx-background-color: #9b59b6; -fx-text-fill: white;"/>
                     </VBox>
 
-                    <!-- sales report-->
                     <VBox spacing="10" style="-fx-background-color: #3a3370; -fx-padding: 15; -fx-background-radius: 10;">
                         <Label text="📊 Sales Report"
                                style="-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 15px;"/>
                         <Button fx:id="btnSalesReport" text="View Sales Report" onAction="#handleViewReport"
                                 style="-fx-background-color: #1e90ff; -fx-text-fill: white;"/>
+
+                        <Button text="🔄 Refresh Sales" onAction="#handleRefreshSales"
+                                style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 15;"/>
+
                     </VBox>
                 </VBox>
             </HBox>
         </ScrollPane>
     </center>
 </BorderPane>
+
 
