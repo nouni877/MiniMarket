@@ -20,38 +20,59 @@ import java.util.ArrayList;
 import org.minimarket.catalogue.SaleRecord;
 
 
-
 public class BuyerController {
 
     @FXML private FlowPane productContainer;
     @FXML private ListView<String> cartList;
     @FXML private Label cartTotalLabel;
+    @FXML private ComboBox<String> categoryFilter; // NEW
+    @FXML private TextField txtSearch;
+
 
     private double total = 0.0;
     private final SalesFileManager salesFileManager = new SalesFileManager();
 
     @FXML
     public void initialize() {
-        // Load shared product list from file
         ProductFileManager.loadProducts();
 
-        // Display all available products
+        setupCategoryFilter();
+
         refreshProductDisplay();
 
-        // Automatically refresh when worker updates inventory
         ProductFileManager.getProducts().addListener((ListChangeListener<Product>) change -> {
             refreshProductDisplay();
         });
     }
 
+    private void setupCategoryFilter() {
+        categoryFilter.getItems().clear();
+        categoryFilter.getItems().add("All");
+
+        for (Product p : ProductFileManager.getProducts()) {
+            if (!categoryFilter.getItems().contains(p.getCategory())) {
+                categoryFilter.getItems().add(p.getCategory());
+            }
+        }
+
+        categoryFilter.setValue("All");
+
+        categoryFilter.setOnAction(e -> refreshProductDisplay());
+    }
+
     /**
      * Refresh product cards whenever data updates.
+     * Now includes category filtering.
      */
     private void refreshProductDisplay() {
         productContainer.getChildren().clear();
 
+        String selectedCategory = categoryFilter.getValue();
+
         for (Product p : ProductFileManager.getProducts()) {
-            addProductCard(p);
+            if (selectedCategory.equals("All") || p.getCategory().equals(selectedCategory)) {
+                addProductCard(p);
+            }
         }
     }
 
@@ -66,14 +87,11 @@ public class BuyerController {
                 + "-fx-background-radius: 15;"
                 + "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 4);"
                 + "-fx-pref-width: 180;");
-
-        // Try to find image by name
         String imagePath = "/images/" + product.getName().toLowerCase() + ".png";
         ImageView imageView;
         try {
             imageView = new ImageView(new Image(getClass().getResourceAsStream(imagePath)));
         } catch (Exception e) {
-            // fallback placeholder
             imageView = new ImageView(new Image(getClass().getResourceAsStream("/images/default.png")));
         }
 
@@ -99,7 +117,7 @@ public class BuyerController {
     }
 
     /**
-     * Adds selected product to the cart list.
+     * Adds selected product to cart.
      */
     private void addToCart(Product product) {
         if (product.getQuantity() <= 0) {
@@ -107,7 +125,6 @@ public class BuyerController {
             return;
         }
 
-        // Decrease stock
         product.setQuantity(product.getQuantity() - 1);
         ProductFileManager.saveProducts();
 
@@ -119,10 +136,6 @@ public class BuyerController {
         refreshProductDisplay(); // update stock display
     }
 
-    /**
-     * Handles checkout button click.
-     * Shows confirmation, updates sales report, and clears cart.
-     */
     @FXML
     private void handleCheckout(ActionEvent event) {
         if (cartList.getItems().isEmpty()) {
@@ -130,32 +143,23 @@ public class BuyerController {
             return;
         }
 
-        // Load current total sales
         double currentSales = salesFileManager.loadTotalSales();
         double updatedSales = currentSales + total;
-
-        // Save total sales
         salesFileManager.saveTotalSales(updatedSales);
 
-        // Create sale records for each cart item
         List<SaleRecord> records = new ArrayList<>();
         for (String item : cartList.getItems()) {
-            // Expected format: "ProductName - £X.XX"
             String[] parts = item.split(" - £");
             if (parts.length == 2) {
                 String name = parts[0].trim();
                 double subtotal = Double.parseDouble(parts[1].trim());
-                records.add(new SaleRecord(name, 1, subtotal)); // 1 unit per "add"
+                records.add(new SaleRecord(name, 1, subtotal));
             }
         }
 
-        // Save records to sales log
         salesFileManager.saveSaleRecords(records);
-
-        // Save updated product quantities
         ProductFileManager.saveProducts();
 
-        // Clear cart
         cartList.getItems().clear();
         total = 0.0;
         cartTotalLabel.setText("£0.00");
@@ -163,10 +167,6 @@ public class BuyerController {
         showAlert("Purchase Complete", "Thank you for your purchase!\nYour order has been recorded.");
     }
 
-
-    /**
-     * Returns to the role selection screen.
-     */
     @FXML
     private void handleBack(ActionEvent event) {
         try {
@@ -177,9 +177,6 @@ public class BuyerController {
         }
     }
 
-    /**
-     * Displays a simple alert dialog.
-     */
     private void showAlert(String title, String msg) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
@@ -187,4 +184,30 @@ public class BuyerController {
         alert.setContentText(msg);
         alert.showAndWait();
     }
+
+    @FXML
+    private void handleSearch(ActionEvent event) {
+        String keyword = txtSearch.getText().trim().toLowerCase();
+
+        productContainer.getChildren().clear();
+
+        String selectedCategory = categoryFilter.getValue();
+
+        for (Product p : ProductFileManager.getProducts()) {
+            boolean matchesName = p.getName().toLowerCase().contains(keyword);
+            boolean matchesCategory = selectedCategory.equals("All") || p.getCategory().equals(selectedCategory);
+
+            if (matchesName && matchesCategory) {
+                addProductCard(p);
+            }
+        }
+    }
+
+    @FXML
+    private void handleClearSearch(ActionEvent event) {
+        txtSearch.clear();
+        refreshProductDisplay();
+    }
+
+
 }

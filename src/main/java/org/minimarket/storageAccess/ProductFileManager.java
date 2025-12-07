@@ -36,11 +36,15 @@ public class ProductFileManager {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length == 3) {
+
+                // Expecting 4 columns: name, price, quantity, category
+                if (parts.length == 4) {
                     String name = parts[0];
                     double price = Double.parseDouble(parts[1]);
                     int quantity = Integer.parseInt(parts[2]);
-                    products.add(new Product(name, price, quantity));
+                    String category = parts[3];
+
+                    products.add(new Product(name, price, quantity, category));
                 }
             }
         } catch (IOException e) {
@@ -56,7 +60,10 @@ public class ProductFileManager {
                 new FileOutputStream(PRODUCT_FILE), StandardCharsets.UTF_8))) {
 
             for (Product p : products) {
-                bw.write(p.getName() + "," + p.getPrice() + "," + p.getQuantity());
+                bw.write(p.getName() + "," +
+                        p.getPrice() + "," +
+                        p.getQuantity() + "," +
+                        p.getCategory());
                 bw.newLine();
             }
         } catch (IOException e) {

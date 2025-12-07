@@ -13,12 +13,10 @@ public class MarketApp extends Application {
 
     private static String userRole;
 
-    // Constructor used when launching from RoleSelectionController
     public MarketApp(String role) {
         userRole = role;
     }
 
-    // Default constructor required by JavaFX
     public MarketApp() {}
 
     @Override

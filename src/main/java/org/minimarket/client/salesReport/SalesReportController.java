@@ -13,17 +13,16 @@ import java.util.List;
 
 public class SalesReportController {
 
-    @FXML private TableView<SaleRecord> salesTable;          // must match fx:id="salesTable"
-    @FXML private TableColumn<SaleRecord, String> colProduct; // fx:id="colProduct"
-    @FXML private TableColumn<SaleRecord, Integer> colQty;    // fx:id="colQty"
-    @FXML private TableColumn<SaleRecord, Double> colSubtotal;// fx:id="colSubtotal"
-    @FXML private Label lblTotal;                             // optional total label (fx:id="lblTotal")
+    @FXML private TableView<SaleRecord> salesTable;
+    @FXML private TableColumn<SaleRecord, String> colProduct;
+    @FXML private TableColumn<SaleRecord, Integer> colQty;
+    @FXML private TableColumn<SaleRecord, Double> colSubtotal;
+    @FXML private Label lblTotal;
 
     private final SalesFileManager salesFileManager = new SalesFileManager();
 
     @FXML
     public void initialize() {
-        // Guard: if any control failed to inject, bail early (helps debugging)
         assert salesTable != null : "fx:id=\"salesTable\" was not injected: check your FXML";
         assert colProduct != null : "fx:id=\"colProduct\" was not injected: check your FXML";
         assert colQty != null : "fx:id=\"colQty\" was not injected: check your FXML";

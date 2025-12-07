@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 
 <AnchorPane xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml"
@@ -55,9 +53,6 @@
             <Label fx:id="lblPinMessage" text="" style="-fx-text-fill: #ff7675; -fx-font-size: 14px;"/>
         </VBox>
 
-        <!-- footer -->
-        <Label text="© 2025 Mini Market System"
-               style="-fx-text-fill: #aaaaaa; -fx-font-size: 14px;"/>
     </VBox>
 </AnchorPane>
 

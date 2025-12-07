@@ -10,7 +10,6 @@
             prefWidth="1200" prefHeight="800"
             style="-fx-background-color: linear-gradient(to bottom right, #1e1b4b, #2d1b69);">
 
-    <!-- Top bar (unchanged) -->
     <top>
         <HBox alignment="CENTER_LEFT" spacing="10"
               style="-fx-background-color: #2a2550; -fx-padding: 10;">
@@ -32,36 +31,42 @@
                     <Insets top="20" right="30" bottom="30" left="30"/>
                 </padding>
 
-                <!-- LEFT PANEL (same layout as worker) -->
+                <!-- LEFT PANEL -->
                 <VBox spacing="15" alignment="TOP_CENTER" HBox.hgrow="ALWAYS">
-                    <!-- search row (same) -->
+
+                    <!-- Search Row -->
                     <HBox spacing="10" alignment="CENTER_LEFT">
                         <TextField fx:id="txtSearch" promptText="Search products..." prefWidth="250"/>
-                        <Button fx:id="btnSearch" text="Search"/>
-                        <Button fx:id="btnClear" text="Clear"/>
+                        <Button text="Search" onAction="#handleSearch"/>
+                        <Button text="Clear" onAction="#handleClearSearch"/>
+
                     </HBox>
 
-                    <!-- dark card like the worker table card -->
+                    <!-- Category Dropdown -->
+                    <ComboBox fx:id="categoryFilter" promptText="Select Category"
+                              prefWidth="250"/>
+
+                    <!-- Product container wrapper -->
                     <VBox spacing="0" VBox.vgrow="ALWAYS"
                           style="-fx-background-color: #2a2550; -fx-background-radius: 12; -fx-padding: 12;">
-                        <!-- the ScrollPane’s viewport is transparent so this card color shows -->
+
                         <ScrollPane fitToWidth="true" fitToHeight="true"
                                     style="-fx-background: transparent; -fx-background-color: transparent;"
                                     VBox.vgrow="ALWAYS">
-                            <!-- product grid replaces the table -->
+
                             <FlowPane fx:id="productContainer"
                                       hgap="25" vgap="25" alignment="TOP_LEFT"
                                       style="-fx-padding: 16;">
-                                <!-- cards added dynamically by BuyerController -->
+                                <!-- cards added dynamically -->
                             </FlowPane>
+
                         </ScrollPane>
                     </VBox>
                 </VBox>
 
-                <!-- RIGHT SIDEBAR (identical style to worker) -->
+                <!-- RIGHT PANEL — Shopping Cart -->
                 <VBox spacing="20" alignment="TOP_LEFT" prefWidth="320">
 
-                    <!-- Shopping Cart box -->
                     <VBox spacing="10"
                           style="-fx-background-color: #3a3370; -fx-padding: 15; -fx-background-radius: 10;">
                         <Label text="🛒 Shopping Cart"
@@ -77,18 +82,22 @@
 
                     </VBox>
 
-                    <!-- Return box (same card style) -->
                     <VBox spacing="10"
                           style="-fx-background-color: #3a3370; -fx-padding: 15; -fx-background-radius: 10;">
                         <Label text="↩️ Return"
                                style="-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 15px;"/>
                         <Button fx:id="btnBack" text="Back to Role Selection"
+                                onAction="#handleBack"
                                 style="-fx-background-color: #9b59b6; -fx-text-fill: white;"/>
+
                     </VBox>
+
                 </VBox>
+
             </HBox>
         </ScrollPane>
     </center>
+
 </BorderPane>
 
 

@@ -1,4 +1,7 @@
-milk,1.5,9
-apples,2.0,2
-bananas,2.0,10
-bread,2.0,4
+milk,1.5,7,Dairy
+apples,2.0,0,Fruit
+bananas,2.0,8,Fruit
+bread,2.0,4,Bakery
+radio,50.0,19,Electronics
+cheese,3.0,33,Dairy
+lebanese,1.5,21,Bakery
