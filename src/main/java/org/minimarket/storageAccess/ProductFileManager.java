@@ -9,17 +9,15 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * ProductFileManager handles loading, saving, and sharing the list of products
- * between different controllers (e.g., Buyer and Worker pages).
+ * between different controllers
  * It maintains a single ObservableList that stays synchronized across the app.
  */
 public class ProductFileManager {
 
     private static final String PRODUCT_FILE = "src/main/resources/data/products.csv";
 
-    // Shared observable list — both pages use the same data
     private static final ObservableList<Product> products = FXCollections.observableArrayList();
 
-    // Getter for shared product list
     public static ObservableList<Product> getProducts() {
         return products;
     }

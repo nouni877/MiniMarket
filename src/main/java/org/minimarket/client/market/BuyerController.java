@@ -18,6 +18,8 @@ import org.minimarket.storageAccess.SalesFileManager;
 import java.util.List;
 import java.util.ArrayList;
 import org.minimarket.catalogue.SaleRecord;
+import org.minimarket.utility.SoundManager;
+
 
 
 public class BuyerController {
@@ -208,6 +210,12 @@ public class BuyerController {
         txtSearch.clear();
         refreshProductDisplay();
     }
+    private SoundManager soundManager;
+
+    public void setSoundManager(SoundManager soundManager) {
+        this.soundManager = soundManager;
+    }
+
 
 
 }

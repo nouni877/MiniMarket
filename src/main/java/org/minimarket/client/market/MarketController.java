@@ -14,6 +14,7 @@ import org.minimarket.storageAccess.SalesFileManager;
 import org.minimarket.utility.SoundManager;
 
 
+
 public class MarketController {
 
     // === FXML Elements ===
@@ -27,12 +28,12 @@ public class MarketController {
     @FXML private TextField txtAddName;
     @FXML private TextField txtAddPrice;
     @FXML private TextField txtAddQty;
-    @FXML private TextField txtAddCategory;   // NEW
+    @FXML private TextField txtAddCategory;
 
     @FXML private TextField txtEditName;
     @FXML private TextField txtEditPrice;
     @FXML private TextField txtEditQty;
-    @FXML private TextField txtEditCategory;  // NEW
+    @FXML private TextField txtEditCategory;
 
     @FXML private TextField txtRemoveName;
 
@@ -53,11 +54,13 @@ public class MarketController {
     @FXML private Button btnRemoveProduct;
     @FXML private Button btnClearInventory;
 
+
     private ObservableList<Product> products;
     private ObservableList<CartItem> cartItems;
+    private SoundManager soundManager;
+
 
     private final SalesFileManager salesFileManager = new SalesFileManager();
-    private final SoundManager soundManager = new SoundManager();
 
     private double totalSales = 0.0;
     private String userRole = "buyer";  // default role
@@ -90,6 +93,9 @@ public class MarketController {
         lblTotalSales.setText(String.format("£%.2f", totalSales));
         lblCartTotal.setText("Cart Total: £0.00");
     }
+    public void setSoundManager(SoundManager soundManager) {
+        this.soundManager = soundManager;
+    }
 
     // Role Handling
     public void setUserRole(String role) {
@@ -120,7 +126,6 @@ public class MarketController {
         return userRole.equalsIgnoreCase("worker");
     }
 
-    // Searching
     @FXML
     private void handleSearch(ActionEvent e) {
         String keyword = txtSearch.getText().trim().toLowerCase();
@@ -406,5 +411,8 @@ public class MarketController {
         lblTotalSales.setText(String.format("£%.2f", totalSales));
         showAlert("Sales Updated", "Sales refreshed.");
     }
+
+
+
 }
 
