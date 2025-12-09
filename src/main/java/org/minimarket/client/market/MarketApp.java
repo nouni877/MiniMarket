@@ -6,10 +6,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.minimarket.utility.SoundManager;
-
-
-
-
 /**
  * Launches the Buyer or Worker view depending on the provided role.
  */
@@ -37,7 +33,7 @@ public class MarketApp extends Application {
 
             MarketController controller = loader.getController();
             controller.setUserRole("worker");
-            controller.setSoundManager(soundManager);   // <-- ADD THIS
+            controller.setSoundManager(soundManager);   
 
             stage.setTitle("Mini Market - Worker Dashboard");
 
@@ -46,7 +42,7 @@ public class MarketApp extends Application {
             root = loader.load();
 
             BuyerController controller = loader.getController();
-            controller.setSoundManager(soundManager);   // <-- ADD THIS
+            controller.setSoundManager(soundManager);
 
             stage.setTitle("Mini Market - Buyer View");
         }

@@ -56,7 +56,7 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/market_buyer.fxml"));
         Parent root = loader.load();
 
-        BuyerController controller = loader.getController(); // not mandatory, but ready if needed
+        BuyerController controller = loader.getController();
 
         Scene scene = new Scene(root, 1200, 800);
         primaryStage.setTitle("Mini Market - Buyer View");

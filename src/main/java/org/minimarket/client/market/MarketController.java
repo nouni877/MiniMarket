@@ -13,11 +13,9 @@ import org.minimarket.storageAccess.ProductFileManager;
 import org.minimarket.storageAccess.SalesFileManager;
 import org.minimarket.utility.SoundManager;
 
-
-
 public class MarketController {
 
-    // === FXML Elements ===
+    // === FXML elements ===
     @FXML private TableView<Product> tblProducts;
     @FXML private TableColumn<Product, String> colName;
     @FXML private TableColumn<Product, Double> colPrice;
@@ -411,8 +409,5 @@ public class MarketController {
         lblTotalSales.setText(String.format("£%.2f", totalSales));
         showAlert("Sales Updated", "Sales refreshed.");
     }
-
-
-
 }
 

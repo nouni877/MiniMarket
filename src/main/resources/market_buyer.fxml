@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -30,9 +29,6 @@
                 <padding>
                     <Insets top="20" right="30" bottom="30" left="30"/>
                 </padding>
-
-
-
                 <!-- LEFT PANEL -->
                 <VBox spacing="15" alignment="TOP_CENTER" HBox.hgrow="ALWAYS">
 
@@ -64,9 +60,8 @@
                     </VBox>
                 </VBox>
 
-                <!-- RIGHT PANEL — Shopping Cart -->
+                <!-- Shopping Cart -->
                 <VBox spacing="20" alignment="TOP_LEFT" prefWidth="320">
-
                     <VBox spacing="10"
                           style="-fx-background-color: #000000; -fx-padding: 15; -fx-background-radius: 10;">
                         <Label text="🛒 Shopping Cart"
@@ -76,7 +71,9 @@
                                   style="-fx-background-color: white; -fx-text-fill: white; -fx-background-radius: 8;"/>
 
                         <Button fx:id="btnRemoveFromCart" text="Remove Selected"
+                                onAction="#handleRemoveFromCart"
                                 style="-fx-background-color: #ff5252; -fx-text-fill: white;"/>
+
                         <Button text="Checkout" onAction="#handleCheckout"
                                 style="-fx-background-color: white; -fx-text-fill: black; -fx-font-weight: bold; -fx-padding: 10 20;"/>
 

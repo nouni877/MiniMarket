@@ -86,7 +86,6 @@ public class RoleSelectionController {
             try {
                 Stage stage = new Stage();
 
-                // Launch MarketApp in Worker mode
                 MarketApp app = new MarketApp("worker");
                 app.start(stage);
 

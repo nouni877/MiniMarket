@@ -10,7 +10,6 @@ public class MarketView {
             System.out.printf("%s - £%.2f (%d in stock)%n", p.getName(), p.getPrice(), p.getQuantity());
         }
     }
-
     public void displayTotal(double total) {
         System.out.println("Total Sales: £" + total);
     }

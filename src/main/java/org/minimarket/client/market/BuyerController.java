@@ -11,42 +11,43 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
+
 import org.minimarket.catalogue.Product;
+import org.minimarket.catalogue.SaleRecord;
 import org.minimarket.main.Main;
 import org.minimarket.storageAccess.ProductFileManager;
 import org.minimarket.storageAccess.SalesFileManager;
-import java.util.List;
-import java.util.ArrayList;
-import org.minimarket.catalogue.SaleRecord;
 import org.minimarket.utility.SoundManager;
 
-
+import java.util.ArrayList;
+import java.util.List;
 
 public class BuyerController {
 
     @FXML private FlowPane productContainer;
     @FXML private ListView<String> cartList;
     @FXML private Label cartTotalLabel;
-    @FXML private ComboBox<String> categoryFilter; // NEW
+    @FXML private ComboBox<String> categoryFilter;
     @FXML private TextField txtSearch;
 
-
-    private double total = 0.0;
     private final SalesFileManager salesFileManager = new SalesFileManager();
+    private SoundManager soundManager;
 
     @FXML
     public void initialize() {
         ProductFileManager.loadProducts();
-
         setupCategoryFilter();
-
         refreshProductDisplay();
-
         ProductFileManager.getProducts().addListener((ListChangeListener<Product>) change -> {
             refreshProductDisplay();
         });
     }
 
+    public void setSoundManager(SoundManager soundManager) {
+        this.soundManager = soundManager;
+    }
+
+    // === category filter ===
     private void setupCategoryFilter() {
         categoryFilter.getItems().clear();
         categoryFilter.getItems().add("All");
@@ -58,17 +59,12 @@ public class BuyerController {
         }
 
         categoryFilter.setValue("All");
-
         categoryFilter.setOnAction(e -> refreshProductDisplay());
     }
 
-    /**
-     * Refresh product cards whenever data updates.
-     * Now includes category filtering.
-     */
+    // === refresh products ===
     private void refreshProductDisplay() {
         productContainer.getChildren().clear();
-
         String selectedCategory = categoryFilter.getValue();
 
         for (Product p : ProductFileManager.getProducts()) {
@@ -78,9 +74,7 @@ public class BuyerController {
         }
     }
 
-    /**
-     * Creates and adds a product card for each item.
-     */
+    // === product card UI ===
     private void addProductCard(Product product) {
         VBox card = new VBox(10);
         card.setAlignment(Pos.CENTER);
@@ -89,8 +83,10 @@ public class BuyerController {
                 + "-fx-background-radius: 15;"
                 + "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 4);"
                 + "-fx-pref-width: 180;");
+
         String imagePath = "/images/" + product.getName().toLowerCase() + ".png";
         ImageView imageView;
+
         try {
             imageView = new ImageView(new Image(getClass().getResourceAsStream(imagePath)));
         } catch (Exception e) {
@@ -118,9 +114,7 @@ public class BuyerController {
         productContainer.getChildren().add(card);
     }
 
-    /**
-     * Adds selected product to cart.
-     */
+    // === Add to cart ===
     private void addToCart(Product product) {
         if (product.getQuantity() <= 0) {
             showAlert("Out of Stock", product.getName() + " is currently out of stock.");
@@ -130,63 +124,82 @@ public class BuyerController {
         product.setQuantity(product.getQuantity() - 1);
         ProductFileManager.saveProducts();
 
-        // Add to buyer's cart
-        cartList.getItems().add(product.getName() + " - £" + String.format("%.2f", product.getPrice()));
-        total += product.getPrice();
-        cartTotalLabel.setText(String.format("£%.2f", total));
+        String entry = product.getName() + " - £" + String.format("%.2f", product.getPrice());
+        cartList.getItems().add(entry);
 
-        refreshProductDisplay(); // update stock display
+        updateCartTotal();
+        refreshProductDisplay();
     }
 
+    // === Remove===
     @FXML
-    private void handleCheckout(ActionEvent event) {
-        if (cartList.getItems().isEmpty()) {
-            showAlert("Cart Empty", "Please add some products to the cart first.");
-            return;
+    private void handleRemoveFromCart(ActionEvent event) {
+        String selected = cartList.getSelectionModel().getSelectedItem();
+        if (selected != null) {
+            cartList.getItems().remove(selected);
+            updateCartTotal();
         }
+    }
 
-        double currentSales = salesFileManager.loadTotalSales();
-        double updatedSales = currentSales + total;
-        salesFileManager.saveTotalSales(updatedSales);
+    // === update cart total ===
+    private void updateCartTotal() {
+        double total = 0.0;
 
-        List<SaleRecord> records = new ArrayList<>();
         for (String item : cartList.getItems()) {
-            String[] parts = item.split(" - £");
-            if (parts.length == 2) {
-                String name = parts[0].trim();
-                double subtotal = Double.parseDouble(parts[1].trim());
-                records.add(new SaleRecord(name, 1, subtotal));
+            try {
+                String priceText = item.substring(item.lastIndexOf("£") + 1);
+                total += Double.parseDouble(priceText);
+            } catch (Exception e) {
+                System.err.println("Price parse error: " + item);
             }
         }
 
-        salesFileManager.saveSaleRecords(records);
-        ProductFileManager.saveProducts();
+        cartTotalLabel.setText(String.format("£%.2f", total));
+    }
 
+    // === Checkout===
+    @FXML
+    private void handleCheckout(ActionEvent event) {
+
+        if (cartList.getItems().isEmpty()) {
+            showAlert("Cart Empty", "Please add items before purchasing.");
+            return;
+        }
+
+        List<SaleRecord> saleRecords = new ArrayList<>();
+        double cartTotal = 0.0;
+
+        for (String item : cartList.getItems()) {
+            try {
+                String name = item.substring(0, item.lastIndexOf(" - £"));
+                double price = Double.parseDouble(item.substring(item.lastIndexOf("£") + 1));
+
+                cartTotal += price;
+
+                saleRecords.add(new SaleRecord(name, 1, price));
+
+            } catch (Exception e) {
+                System.err.println("Failed to parse cart entry: " + item);
+            }
+        }
+
+        // Update total sales
+        double previousSales = salesFileManager.loadTotalSales();
+        double updatedSales = previousSales + cartTotal;
+        salesFileManager.saveTotalSales(updatedSales);
+
+        // Append itemized sales log
+        salesFileManager.saveSaleRecords(saleRecords);
+
+        // Clear cart UI
         cartList.getItems().clear();
-        total = 0.0;
         cartTotalLabel.setText("£0.00");
 
-        showAlert("Purchase Complete", "Thank you for your purchase!\nYour order has been recorded.");
+        showAlert("Purchase Complete", "Your purchase has been recorded.");
     }
 
-    @FXML
-    private void handleBack(ActionEvent event) {
-        try {
-            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-            new Main().start(stage);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
-    private void showAlert(String title, String msg) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(msg);
-        alert.showAndWait();
-    }
-
+    // === Search===
     @FXML
     private void handleSearch(ActionEvent event) {
         String keyword = txtSearch.getText().trim().toLowerCase();
@@ -197,7 +210,8 @@ public class BuyerController {
 
         for (Product p : ProductFileManager.getProducts()) {
             boolean matchesName = p.getName().toLowerCase().contains(keyword);
-            boolean matchesCategory = selectedCategory.equals("All") || p.getCategory().equals(selectedCategory);
+            boolean matchesCategory = selectedCategory.equals("All") ||
+                    p.getCategory().equals(selectedCategory);
 
             if (matchesName && matchesCategory) {
                 addProductCard(p);
@@ -210,12 +224,24 @@ public class BuyerController {
         txtSearch.clear();
         refreshProductDisplay();
     }
-    private SoundManager soundManager;
 
-    public void setSoundManager(SoundManager soundManager) {
-        this.soundManager = soundManager;
+    // === Back button===
+    @FXML
+    private void handleBack(ActionEvent event) {
+        try {
+            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            new Main().start(stage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-
-
+    // === Alert ===
+    private void showAlert(String title, String msg) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(msg);
+        alert.showAndWait();
+    }
 }
