@@ -8,12 +8,12 @@
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="org.minimarket.client.market.BuyerController"
             prefWidth="1200" prefHeight="800"
-            style="-fx-background-color: linear-gradient(to bottom right, #1e1b4b, #2d1b69);">
+            style="-fx-background-color: white; -fx-padding: 0;">
 
     <top>
         <HBox alignment="CENTER_LEFT" spacing="10"
-              style="-fx-background-color: #2a2550; -fx-padding: 10;">
-            <Label text="🛍️  Mini Market Buyer View"
+              style="-fx-background-color: black; -fx-padding: 10;">
+            <Label text="🛍️  Mini Market "
                    style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: white;"/>
             <Region HBox.hgrow="ALWAYS"/>
             <Label text="💰 Cart Total:" style="-fx-text-fill: #dddddd; -fx-font-size: 14px;"/>
@@ -31,15 +31,16 @@
                     <Insets top="20" right="30" bottom="30" left="30"/>
                 </padding>
 
+
+
                 <!-- LEFT PANEL -->
                 <VBox spacing="15" alignment="TOP_CENTER" HBox.hgrow="ALWAYS">
 
-                    <!-- Search Row -->
+                    <!-- SEARCH BAR -->
                     <HBox spacing="10" alignment="CENTER_LEFT">
                         <TextField fx:id="txtSearch" promptText="Search products..." prefWidth="250"/>
-                        <Button text="Search" onAction="#handleSearch"/>
-                        <Button text="Clear" onAction="#handleClearSearch"/>
-
+                        <Button text="Search" onAction="#handleSearch" styleClass="button-primary"/>
+                        <Button text="Clear" onAction="#handleClearSearch" styleClass="button"/>
                     </HBox>
 
                     <!-- Category Dropdown -->
@@ -48,7 +49,7 @@
 
                     <!-- Product container wrapper -->
                     <VBox spacing="0" VBox.vgrow="ALWAYS"
-                          style="-fx-background-color: #2a2550; -fx-background-radius: 12; -fx-padding: 12;">
+                          style="-fx-background-color: black; -fx-background-radius: 12; -fx-padding: 12;">
 
                         <ScrollPane fitToWidth="true" fitToHeight="true"
                                     style="-fx-background: transparent; -fx-background-color: transparent;"
@@ -57,7 +58,6 @@
                             <FlowPane fx:id="productContainer"
                                       hgap="25" vgap="25" alignment="TOP_LEFT"
                                       style="-fx-padding: 16;">
-                                <!-- cards added dynamically -->
                             </FlowPane>
 
                         </ScrollPane>
@@ -68,32 +68,29 @@
                 <VBox spacing="20" alignment="TOP_LEFT" prefWidth="320">
 
                     <VBox spacing="10"
-                          style="-fx-background-color: #3a3370; -fx-padding: 15; -fx-background-radius: 10;">
+                          style="-fx-background-color: #000000; -fx-padding: 15; -fx-background-radius: 10;">
                         <Label text="🛒 Shopping Cart"
                                style="-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 15px;"/>
 
                         <ListView fx:id="cartList" prefHeight="300"
-                                  style="-fx-background-color: #2a2550; -fx-text-fill: white; -fx-background-radius: 8;"/>
+                                  style="-fx-background-color: white; -fx-text-fill: white; -fx-background-radius: 8;"/>
 
                         <Button fx:id="btnRemoveFromCart" text="Remove Selected"
                                 style="-fx-background-color: #ff5252; -fx-text-fill: white;"/>
                         <Button text="Checkout" onAction="#handleCheckout"
-                                style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 20;"/>
+                                style="-fx-background-color: white; -fx-text-fill: black; -fx-font-weight: bold; -fx-padding: 10 20;"/>
 
                     </VBox>
 
                     <VBox spacing="10"
-                          style="-fx-background-color: #3a3370; -fx-padding: 15; -fx-background-radius: 10;">
+                          style="-fx-background-color: #000000; -fx-padding: 15; -fx-background-radius: 10;">
                         <Label text="↩️ Return"
                                style="-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 15px;"/>
                         <Button fx:id="btnBack" text="Back to Role Selection"
                                 onAction="#handleBack"
-                                style="-fx-background-color: #9b59b6; -fx-text-fill: white;"/>
-
+                                style="-fx-background-color: white; -fx-text-fill: black;"/>
                     </VBox>
-
                 </VBox>
-
             </HBox>
         </ScrollPane>
     </center>

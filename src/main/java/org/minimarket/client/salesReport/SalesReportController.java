@@ -23,10 +23,10 @@ public class SalesReportController {
 
     @FXML
     public void initialize() {
-        assert salesTable != null : "fx:id=\"salesTable\" was not injected: check your FXML";
-        assert colProduct != null : "fx:id=\"colProduct\" was not injected: check your FXML";
-        assert colQty != null : "fx:id=\"colQty\" was not injected: check your FXML";
-        assert colSubtotal != null : "fx:id=\"colSubtotal\" was not injected: check your FXML";
+        assert salesTable != null : "fx:id=\"salesTable\" ";
+        assert colProduct != null : "fx:id=\"colProduct\" ";
+        assert colQty != null : "fx:id=\"colQty\"";
+        assert colSubtotal != null : "fx:id=\"colSubtotal\" was not injected";
 
         colProduct.setCellValueFactory(new PropertyValueFactory<>("productName"));
         colQty.setCellValueFactory(new PropertyValueFactory<>("quantity"));

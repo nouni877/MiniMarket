@@ -17,7 +17,7 @@ public class SoundManager {
 
     private AudioClip loadSound(String path) {
         try {
-            URL resource = getClass().getResource(path);
+            URL resource = SoundManager.class.getResource(path);
             if (resource != null) {
                 return new AudioClip(resource.toExternalForm());
             } else {
