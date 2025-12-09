@@ -63,7 +63,7 @@ public class MarketController {
     private double totalSales = 0.0;
     private String userRole = "buyer";  // default role
 
-    // === Initialization ===
+    // === initialization ===
     @FXML
     public void initialize() {
 
