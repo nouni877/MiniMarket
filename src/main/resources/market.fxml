@@ -13,7 +13,7 @@
     <top>
         <HBox alignment="CENTER_LEFT" spacing="10"
               style="-fx-background-color: black; -fx-padding: 10;">
-            <Label text="🛍️  Mini Market Dashboard"
+            <Label text="Electro House Worker "
                    style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: white;"/>
             <Region HBox.hgrow="ALWAYS"/>
             <Label text="💰 Total Sales:" style="-fx-text-fill: #dddddd; -fx-font-size: 14px;"/>
@@ -50,7 +50,7 @@
                                style="-fx-background-color: black; -fx-control-inner-background: black;
                                       -fx-table-cell-border-color: transparent;
                                       -fx-table-header-border-color: black;
-                                      -fx-text-fill: white;">
+                                      -fx-text-fill: black;">
                         <columns>
                             <TableColumn fx:id="colName" text="Product" prefWidth="250"/>
                             <TableColumn fx:id="colPrice" text="Price (£)" prefWidth="150"/>

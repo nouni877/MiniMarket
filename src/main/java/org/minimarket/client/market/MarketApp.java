@@ -6,9 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.minimarket.utility.SoundManager;
-/**
- * Launches the Buyer or Worker view depending on the provided role.
- */
+
 public class MarketApp extends Application {
 
     private static String userRole;
@@ -52,5 +50,4 @@ public class MarketApp extends Application {
         stage.centerOnScreen();
         stage.show();
     }
-
 }

@@ -12,12 +12,18 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 
+import java.io.File;
+import java.awt.Desktop;
+
+
 import org.minimarket.catalogue.Product;
 import org.minimarket.catalogue.SaleRecord;
 import org.minimarket.main.Main;
 import org.minimarket.storageAccess.ProductFileManager;
 import org.minimarket.storageAccess.SalesFileManager;
 import org.minimarket.utility.SoundManager;
+import org.minimarket.utility.ReceiptGenerator;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +53,7 @@ public class BuyerController {
         this.soundManager = soundManager;
     }
 
-    // === category filter ===
+    //  category filter
     private void setupCategoryFilter() {
         categoryFilter.getItems().clear();
         categoryFilter.getItems().add("All");
@@ -62,7 +68,7 @@ public class BuyerController {
         categoryFilter.setOnAction(e -> refreshProductDisplay());
     }
 
-    // === refresh products ===
+    // refresh products
     private void refreshProductDisplay() {
         productContainer.getChildren().clear();
         String selectedCategory = categoryFilter.getValue();
@@ -74,7 +80,7 @@ public class BuyerController {
         }
     }
 
-    // === product card UI ===
+    //  product card UI
     private void addProductCard(Product product) {
         VBox card = new VBox(10);
         card.setAlignment(Pos.CENTER);
@@ -114,7 +120,7 @@ public class BuyerController {
         productContainer.getChildren().add(card);
     }
 
-    // === Add to cart ===
+    // Add to cart
     private void addToCart(Product product) {
         if (product.getQuantity() <= 0) {
             showAlert("Out of Stock", product.getName() + " is currently out of stock.");
@@ -131,7 +137,7 @@ public class BuyerController {
         refreshProductDisplay();
     }
 
-    // === Remove===
+    // Remove
     @FXML
     private void handleRemoveFromCart(ActionEvent event) {
         String selected = cartList.getSelectionModel().getSelectedItem();
@@ -157,7 +163,6 @@ public class BuyerController {
         cartTotalLabel.setText(String.format("£%.2f", total));
     }
 
-    // === Checkout===
     @FXML
     private void handleCheckout(ActionEvent event) {
 
@@ -169,13 +174,14 @@ public class BuyerController {
         List<SaleRecord> saleRecords = new ArrayList<>();
         double cartTotal = 0.0;
 
-        for (String item : cartList.getItems()) {
+        List<String> rawItems = cartList.getItems();
+
+        for (String item : rawItems) {
             try {
                 String name = item.substring(0, item.lastIndexOf(" - £"));
                 double price = Double.parseDouble(item.substring(item.lastIndexOf("£") + 1));
 
                 cartTotal += price;
-
                 saleRecords.add(new SaleRecord(name, 1, price));
 
             } catch (Exception e) {
@@ -183,23 +189,33 @@ public class BuyerController {
             }
         }
 
-        // Update total sales
+        // Generate Receipt
+        String receiptPath = ReceiptGenerator.createReceiptFromStrings(rawItems, cartTotal);
+
+        try {
+            java.awt.Desktop.getDesktop().open(new File(receiptPath));
+        } catch (Exception ex) {
+            System.err.println("Could not open receipt file.");
+        }
+
+
+        // Generate Receipt
+        ReceiptGenerator.createReceiptFromStrings(rawItems, cartTotal);
+
+        //  Update Total Sales
         double previousSales = salesFileManager.loadTotalSales();
         double updatedSales = previousSales + cartTotal;
         salesFileManager.saveTotalSales(updatedSales);
 
-        // Append itemized sales log
         salesFileManager.saveSaleRecords(saleRecords);
 
         // Clear cart UI
         cartList.getItems().clear();
         cartTotalLabel.setText("£0.00");
 
-        showAlert("Purchase Complete", "Your purchase has been recorded.");
+        showAlert("Success", "Purchase completed! Receipt saved.");
     }
-
-
-    // === Search===
+    // Search
     @FXML
     private void handleSearch(ActionEvent event) {
         String keyword = txtSearch.getText().trim().toLowerCase();
@@ -225,7 +241,7 @@ public class BuyerController {
         refreshProductDisplay();
     }
 
-    // === Back button===
+    //  Back button
     @FXML
     private void handleBack(ActionEvent event) {
         try {
@@ -236,7 +252,7 @@ public class BuyerController {
         }
     }
 
-    // === Alert ===
+    // Alert
     private void showAlert(String title, String msg) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);

@@ -1,0 +1,5 @@
+username,password,role
+buyer1,1234,buyer
+worker1,1111,worker
+admin,adminpass,worker
+yara,ihatenadine3,buyer
