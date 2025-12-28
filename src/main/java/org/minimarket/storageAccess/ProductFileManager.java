@@ -28,6 +28,7 @@ public class ProductFileManager {
      */
     public static void loadProducts() {
         products.clear();
+
         try (BufferedReader br = new BufferedReader(new InputStreamReader(
                 new FileInputStream(PRODUCT_FILE), StandardCharsets.UTF_8))) {
 
@@ -35,20 +36,33 @@ public class ProductFileManager {
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
 
-                // Expecting 4 columns: name, price, quantity, category
+                // name, price, quantity, category
                 if (parts.length == 4) {
-                    String name = parts[0];
+                    String name = parts[0]
+                            .trim()
+                            .toLowerCase()
+                            .replaceAll("\\s+", "");
+
                     double price = Double.parseDouble(parts[1]);
                     int quantity = Integer.parseInt(parts[2]);
-                    String category = parts[3];
+                    String category = parts[3].trim();
 
-                    products.add(new Product(name, price, quantity, category));
+                    String imagePath = "/images/" + name + ".png";
+
+                    if (ProductFileManager.class.getResource(imagePath) == null) {
+                        imagePath = "/images/default.png";
+                    }
+
+                    products.add(new Product(name, price, quantity, category, imagePath));
+
+
                 }
             }
         } catch (IOException e) {
             System.err.println("Error loading products: " + e.getMessage());
         }
     }
+
 
     /**
      * Saves all products from the ObservableList to the CSV file.

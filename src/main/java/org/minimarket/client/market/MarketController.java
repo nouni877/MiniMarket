@@ -177,9 +177,18 @@ public class MarketController {
 
         try {
             String name = txtAddName.getText().trim();
-            double price = Double.parseDouble(txtAddPrice.getText());
-            int qty = Integer.parseInt(txtAddQty.getText());
             String category = txtAddCategory.getText().trim();
+
+            double price;
+            int qty;
+
+            try {
+                price = Double.parseDouble(txtAddPrice.getText());
+                qty = Integer.parseInt(txtAddQty.getText());
+            } catch (NumberFormatException ex) {
+                showAlert("Invalid Input", "Price and quantity must be valid numbers.");
+                return;
+            }
 
             if (name.isEmpty() || category.isEmpty() || price <= 0 || qty < 0) {
                 showAlert("Invalid Input", "All fields must be filled correctly.");
@@ -190,12 +199,19 @@ public class MarketController {
             ProductFileManager.addProduct(newProduct);
 
             clearAddFields();
-            soundManager.playSuccessSound();
             showAlert("Success", "Product added!");
 
+            try {
+                soundManager.playSuccessSound();
+            } catch (Exception soundEx) {
+                System.err.println("Sound could not be played.");
+            }
+
         } catch (Exception ex) {
-            showAlert("Error", "Invalid input format.");
+            showAlert("Error", "An unexpected error occurred while adding the product.");
         }
+
+
     }
 
     private void clearAddFields() {

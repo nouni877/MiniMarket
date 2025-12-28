@@ -80,7 +80,7 @@ public class BuyerController {
         }
     }
 
-    //  product card UI
+    // product card UI
     private void addProductCard(Product product) {
         VBox card = new VBox(10);
         card.setAlignment(Pos.CENTER);
@@ -90,13 +90,15 @@ public class BuyerController {
                 + "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 4);"
                 + "-fx-pref-width: 180;");
 
-        String imagePath = "/images/" + product.getName().toLowerCase() + ".png";
         ImageView imageView;
-
         try {
-            imageView = new ImageView(new Image(getClass().getResourceAsStream(imagePath)));
-        } catch (Exception e) {
-            imageView = new ImageView(new Image(getClass().getResourceAsStream("/images/default.png")));
+            imageView = new ImageView(
+                    new Image(getClass().getResourceAsStream(product.getImagePath()))
+            );
+        } catch (Exception ex) {
+            imageView = new ImageView(
+                    new Image(getClass().getResourceAsStream("/images/default.png"))
+            );
         }
 
         imageView.setFitWidth(120);
