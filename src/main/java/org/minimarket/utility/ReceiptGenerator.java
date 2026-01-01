@@ -13,7 +13,6 @@ import java.util.List;
  * after successful checkout.
  */
 public class ReceiptGenerator {
-
     /**
      * Creates a receipt file using item strings from the cart.
      * Each item is formatted as: "Product Name - £Price"

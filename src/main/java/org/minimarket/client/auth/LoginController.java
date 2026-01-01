@@ -53,9 +53,10 @@ public class LoginController {
                         Main.loadWorkerPage();  // Load Worker Dashboard
                     }
                 } catch (Exception e) {
-                    // If something fails during page loading, show an error to the user
+                    e.printStackTrace();
                     errorLabel.setText("Error loading page.");
                 }
+
 
                 return; // Stop once a match is found
             }

@@ -1,7 +1,6 @@
 package org.minimarket.storageAccess;
 
 import org.minimarket.catalogue.SaleRecord;
-
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -111,7 +110,6 @@ public class SalesFileManager {
         } catch (IOException e) {
             System.out.println("Sales log file missing, no previous sales.");
         }
-
         return sales;
     }
 }

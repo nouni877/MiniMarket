@@ -91,18 +91,27 @@ public class BuyerController {
                 + "-fx-pref-width: 180;");
 
         ImageView imageView;
-        try {
-            imageView = new ImageView(
-                    new Image(getClass().getResourceAsStream(product.getImagePath()))
-            );
-        } catch (Exception ex) {
-            imageView = new ImageView(
-                    new Image(getClass().getResourceAsStream("/images/default.png"))
-            );
+
+        var url = getClass().getResource(product.getImagePath());
+        if (url == null) {
+            url = getClass().getResource("/images/default.png");
         }
 
+        Image image = new Image(
+                url.toExternalForm(),
+                120,     // requested width
+                120,     // requested height
+                true,    // preserve ratio
+                true     // smooth
+        );
+
+        imageView = new ImageView(image);
         imageView.setFitWidth(120);
         imageView.setFitHeight(120);
+        imageView.setPreserveRatio(true);
+        imageView.setSmooth(true);
+        imageView.setCache(true);
+
 
         Label nameLabel = new Label(product.getName());
         nameLabel.setStyle("-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;");

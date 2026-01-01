@@ -1,7 +1,6 @@
 package org.minimarket.storageAccess;
 
 import org.minimarket.auth.User;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
