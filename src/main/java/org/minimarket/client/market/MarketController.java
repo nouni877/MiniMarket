@@ -19,32 +19,32 @@ import org.minimarket.utility.SoundManager;
  */
 public class MarketController {
 
-    // === Product table (inventory view) ===
+    //  Product table (inventory view)
     @FXML private TableView<Product> tblProducts;
     @FXML private TableColumn<Product, String> colName;
     @FXML private TableColumn<Product, Double> colPrice;
     @FXML private TableColumn<Product, Integer> colStock;
 
-    // === Search & filter controls ===
+    //  Search & filter controls
     @FXML private TextField txtSearch;
     @FXML private CheckBox chkLowStock;
 
-    // === Add product fields (worker only) ===
+    //  Add product fields
     @FXML private TextField txtAddName;
     @FXML private TextField txtAddPrice;
     @FXML private TextField txtAddQty;
     @FXML private TextField txtAddCategory;
 
-    // === Edit product fields (worker only) ===
+    // Edit product fields
     @FXML private TextField txtEditName;
     @FXML private TextField txtEditPrice;
     @FXML private TextField txtEditQty;
     @FXML private TextField txtEditCategory;
 
-    // === Remove product field (worker only) ===
+    // Remove product field (worker only)
     @FXML private TextField txtRemoveName;
 
-    // === Sales & cart UI ===
+    // Sales & cart UI
     @FXML private Label lblTotalSales;
     @FXML private TableView<CartItem> tblCart;
     @FXML private TableColumn<CartItem, String> cartName;
@@ -61,18 +61,18 @@ public class MarketController {
     @FXML private Button btnRemoveProduct;
     @FXML private Button btnClearInventory;
 
-    // === Data collections ===
+    //  Data collections
     private ObservableList<Product> products;
     private ObservableList<CartItem> cartItems;
 
-    // === Utilities ===
+    //  Utilities
     private SoundManager soundManager;
     private final SalesFileManager salesFileManager = new SalesFileManager();
 
-    // === Sales tracking ===
+    // Sales tracking
     private double totalSales = 0.0;
 
-    // === User role (buyer by default) ===
+    // User role (buyer by default)
     private String userRole = "buyer";
 
     /**
@@ -287,12 +287,35 @@ public class MarketController {
      */
     @FXML
     private void handleCheckout(ActionEvent e) {
-        double cartTotal = cartItems.stream().mapToDouble(CartItem::getSubtotal).sum();
+
+        if (cartItems.isEmpty()) {
+            showAlert("Cart Empty", "Add items before checkout.");
+            return;
+        }
+
+        double cartTotal = 0.0;
+
+        // 1) Save each cart item as a sale record (so it appears in report)
+        for (CartItem item : cartItems) {
+            cartTotal += item.getSubtotal();
+
+            salesFileManager.saveSaleRecords(
+                    java.util.List.of(
+                            new org.minimarket.catalogue.SaleRecord(
+                                    item.getProductName(),
+                                    item.getQuantity(),
+                                    item.getSubtotal()
+                            )
+                    )
+            );
+        }
+
+        // 2) Update total sales (stored total)
         totalSales += cartTotal;
-
-        lblTotalSales.setText(String.format("£%.2f", totalSales));
         salesFileManager.saveTotalSales(totalSales);
+        lblTotalSales.setText(String.format("£%.2f", totalSales));
 
+        // 3) Clear cart
         cartItems.clear();
         updateCartTotal();
 
@@ -353,6 +376,19 @@ public class MarketController {
             updateCartTotal();
         }
     }
+
+    @FXML
+    private void handleEditProduct(ActionEvent e) {
+    }
+
+    @FXML
+    private void handleRemoveProduct(ActionEvent e) {
+    }
+
+    @FXML
+    private void handleClearInventory(ActionEvent e) {
+    }
+
 
 }
 
