@@ -24,7 +24,7 @@ public class LoginController {
     // Password field where the user enters their password
     @FXML private PasswordField passwordField;
 
-    // Label used to show login errors (incorrect credentials, loading issues, etc.)
+    // Label used to show login errors
     @FXML private Label errorLabel;
 
     // List of all users loaded from the users.csv file
@@ -48,9 +48,9 @@ public class LoginController {
                 // Successful login → load correct page
                 try {
                     if (user.getRole().equalsIgnoreCase("buyer")) {
-                        Main.loadBuyerPage();   // Load Buyer Dashboard
+                        Main.loadBuyerPage();
                     } else if (user.getRole().equalsIgnoreCase("worker")) {
-                        Main.loadWorkerPage();  // Load Worker Dashboard
+                        Main.loadWorkerPage();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

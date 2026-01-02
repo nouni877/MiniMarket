@@ -19,12 +19,6 @@ public class UserFileManager {
 
     /**
      * Loads all user records from the users.csv file.
-     *
-     * The file must contain data in this format:
-     * username,password,role
-     * buyer1,1234,buyer
-     * worker1,1111,worker
-     *
      * @return a list of User objects representing all registered users
      */
     public static List<User> loadUsers() {

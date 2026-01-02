@@ -99,9 +99,9 @@ public class BuyerController {
 
         Image image = new Image(
                 url.toExternalForm(),
-                120,     // requested width
-                120,     // requested height
-                true,    // preserve ratio
+                120,     //  width
+                120,     // height
+                true,    // ratio
                 true     // smooth
         );
 
@@ -158,7 +158,7 @@ public class BuyerController {
         }
     }
 
-    // === update cart total ===
+    //update cart total
     private void updateCartTotal() {
         double total = 0.0;
 
@@ -200,7 +200,6 @@ public class BuyerController {
             }
         }
 
-        // Generate Receipt
         String receiptPath = ReceiptGenerator.createReceiptFromStrings(rawItems, cartTotal);
 
         try {
@@ -252,7 +251,7 @@ public class BuyerController {
         refreshProductDisplay();
     }
 
-    //  Back button
+    // Back button
     @FXML
     private void handleBack(ActionEvent event) {
         try {

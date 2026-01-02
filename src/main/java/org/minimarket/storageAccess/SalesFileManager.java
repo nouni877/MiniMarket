@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class SalesFileManager {
 
-    /** CSV file storing detailed sale records (product, qty, subtotal). */
+    /** CSV file storing detailed sale records. */
     private static final String SALES_LOG_FILE = "src/main/resources/data/sales_log.csv";
 
     /** Text file storing a single total sales value. */
@@ -100,9 +100,9 @@ public class SalesFileManager {
                 String[] parts = line.split(",");
                 if (parts.length == 3) {
                     sales.add(new SaleRecord(
-                            parts[0],                         // product name
-                            Integer.parseInt(parts[1]),       // quantity
-                            Double.parseDouble(parts[2])      // subtotal
+                            parts[0],
+                            Integer.parseInt(parts[1]),
+                            Double.parseDouble(parts[2])
                     ));
                 }
             }

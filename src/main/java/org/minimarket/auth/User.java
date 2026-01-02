@@ -7,21 +7,16 @@ package org.minimarket.auth;
  */
 public class User {
 
-    // The unique username used to log in
     private String username;
 
-    // The password associated with the user account
     private String password;
 
-    // The role of the user (e.g., "buyer", "worker")
     private String role;
 
     /**
-     * Constructs a new User object with the given credentials and role.
-     *
      * @param username The username for login authentication
      * @param password The password for login authentication
-     * @param role     The system access level (buyer or worker)
+     * @param role     The system access level
      */
     public User(String username, String password, String role) {
         this.username = username;
@@ -39,9 +34,6 @@ public class User {
 
     /**
      * Gets the password of the user.
-     * Note: passwords are stored in plain text for simplicity in this coursework.
-     * In real applications, passwords must be encrypted.
-     *
      * @return the password
      */
     public String getPassword() {
