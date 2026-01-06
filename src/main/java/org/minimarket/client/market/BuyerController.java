@@ -1,5 +1,5 @@
 package org.minimarket.client.market;
-
+// JavaFX UI components and layout imports
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -27,9 +27,13 @@ import org.minimarket.utility.ReceiptGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * BuyerController handles all buyer-side functionality,
+ * including product display, cart management, searching,
+ * checkout processing, and receipt generation.
+ */
 public class BuyerController {
-
+    // UI elements linked from the FXML file
     @FXML private FlowPane productContainer;
     @FXML private ListView<String> cartList;
     @FXML private Label cartTotalLabel;
@@ -225,7 +229,9 @@ public class BuyerController {
 
         showAlert("Success", "Purchase completed! Receipt saved.");
     }
-    // Search
+    /**
+     * Filters products by search keyword and category.
+     */
     @FXML
     private void handleSearch(ActionEvent event) {
         String keyword = txtSearch.getText().trim().toLowerCase();
@@ -244,14 +250,18 @@ public class BuyerController {
             }
         }
     }
-
+    /**
+     * Clears the search field and restores the full product list.
+     */
     @FXML
     private void handleClearSearch(ActionEvent event) {
         txtSearch.clear();
         refreshProductDisplay();
     }
 
-    // Back button
+    /**
+     * Returns the user to the main menu.
+     */
     @FXML
     private void handleBack(ActionEvent event) {
         try {
@@ -262,7 +272,9 @@ public class BuyerController {
         }
     }
 
-    // Alert
+    /**
+     * Displays an alert.
+     */
     private void showAlert(String title, String msg) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
